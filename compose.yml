@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres # note: if issues in the future you can pin the version
+    restart: always
+    ports:
+      # Bound to localhost to prevent public internet exposure
+      - "127.0.0.1:6432:5432"
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: diesel_demo
+      POSTGRES_PASSWORD: diesel
+      # tell docker to initialize a subfolder in our volume
+      PGDATA: /var/lib/postgresql/data/diesel_demo-data
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
